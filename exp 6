@@ -1,0 +1,62 @@
+
+Longest Increasing Subsequence
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n, 1); 
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) { 
+                if (nums[i] > nums[j] && dp[i] < dp[j] + 1) 
+                    dp[i] = dp[j] + 1;
+            }
+        }
+        return *max_element(dp.begin(), dp.end());
+    }
+};
+
+ 
+ 
+ Perfect Squares
+class Solution 
+{
+public:
+    int numSquares(int n) 
+    {
+        if (n <= 0)
+        {
+            return 0;
+        }
+        static vector<int> cntPerfectSquares({0});
+        while (cntPerfectSquares.size() <= n)
+        {
+            int m = cntPerfectSquares.size();
+            int cntSquares = INT_MAX;
+            for (int i = 1; i*i <= m; i++)
+            {
+                cntSquares = min(cntSquares, cntPerfectSquares[m - i*i] + 1);
+            }
+            
+            cntPerfectSquares.push_back(cntSquares);
+        }
+        return cntPerfectSquares[n];
+    }
+};
+
+
+House Robber
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int prevRob = 0;
+        int maxRob = 0;
+
+        for (int curValue : nums) {
+            int temp = max(maxRob, prevRob + curValue);
+            prevRob = maxRob;
+            maxRob = temp;
+        }
+
+        return maxRob;        
+    }
+};
